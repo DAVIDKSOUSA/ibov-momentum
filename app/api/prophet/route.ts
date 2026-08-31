@@ -6,7 +6,11 @@ import { sanitizeProphetConfigInput } from "@/lib/prophet";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const SCRIPT_PATH = path.join(process.cwd(), "scripts", "run_prophet.py");
+const PROJECT_ROOT = process.cwd();
+const PYTHON_BIN = process.env.PYTHON_BIN ?? "python3";
+const PROPHET_SCRIPT_PATH =
+  process.env.PROPHET_SCRIPT_PATH ??
+  path.join(PROJECT_ROOT, "scripts", "run_prophet.py");
 const TIMEOUT_MS = 120_000;
 
 export async function POST(request: NextRequest) {
@@ -45,8 +49,8 @@ export async function POST(request: NextRequest) {
 
 function runProphet(config: Record<string, unknown>) {
   return new Promise<unknown>((resolve, reject) => {
-    const child = spawn("python3", [SCRIPT_PATH], {
-      cwd: process.cwd(),
+    const child = spawn(PYTHON_BIN, [PROPHET_SCRIPT_PATH], {
+      cwd: PROJECT_ROOT,
       env: {
         ...process.env,
         PYTHONUNBUFFERED: "1",
