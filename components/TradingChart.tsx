@@ -30,12 +30,12 @@ export default function TradingChart({ data }: TradingChartProps) {
       width: container.clientWidth,
       height: container.clientHeight || 520,
       layout: {
-        background: { type: ColorType.Solid, color: "hsl(0, 0%, 100%)" },
-        textColor: "#000000",
+        background: { type: ColorType.Solid, color: "#ffffff" },
+        textColor: "#18181b",
       },
       grid: {
-        vertLines: { color: "rgba(148, 163, 184, 0.14)" },
-        horzLines: { color: "rgba(148, 163, 184, 0.14)" },
+        vertLines: { color: "#e4e4e7" },
+        horzLines: { color: "#e4e4e7" },
       },
       localization: {
         locale: "pt-BR",
@@ -45,10 +45,10 @@ export default function TradingChart({ data }: TradingChartProps) {
           }).format(price),
       },
       rightPriceScale: {
-        borderColor: "rgba(212, 212, 216, 0.20)",
+        borderColor: "#d4d4d8",
       },
       timeScale: {
-        borderColor: "rgba(212, 212, 216, 0.20)",
+        borderColor: "#d4d4d8",
         timeVisible: true,
       },
       crosshair: {
@@ -57,12 +57,12 @@ export default function TradingChart({ data }: TradingChartProps) {
     });
 
     const candleSeries = chart.addSeries(CandlestickSeries, {
-      upColor: "#34d399",
-      downColor: "#fb7185",
-      borderUpColor: "#34d399",
-      borderDownColor: "#fb7185",
-      wickUpColor: "#34d399",
-      wickDownColor: "#fb7185",
+      upColor: "#059669",
+      downColor: "#dc2626",
+      borderUpColor: "#059669",
+      borderDownColor: "#dc2626",
+      wickUpColor: "#059669",
+      wickDownColor: "#dc2626",
       priceFormat: {
         type: "price",
         precision: 0,
@@ -82,7 +82,7 @@ export default function TradingChart({ data }: TradingChartProps) {
       time: signal.time,
       position: signal.type === "bullish" ? "belowBar" : "aboveBar",
       shape: signal.type === "bullish" ? "arrowUp" : "arrowDown",
-      color: signal.type === "bullish" ? "#10b981" : "#ef4444",
+      color: signal.type === "bullish" ? "#047857" : "#b91c1c",
       text: signal.label,
     }));
 
@@ -108,7 +108,7 @@ export default function TradingChart({ data }: TradingChartProps) {
   return (
     <div
       ref={containerRef}
-      className="h-[420px] w-full min-w-0 overflow-hidden rounded-md bg-zinc-900 sm:h-[520px] lg:h-[620px]"
+      className="h-[420px] w-full min-w-0 overflow-hidden rounded-md border border-zinc-200 bg-white sm:h-[520px] lg:h-[620px]"
       aria-label="Grafico de candles do Ibovespa com sinais de momento"
     />
   );

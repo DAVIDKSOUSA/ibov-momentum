@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Momento IBOV
 
-## Getting Started
+MVP didatico de um app de trading feito com Next.js, TypeScript, Tailwind,
+Python, yfinance e Prophet.
 
-First, run the development server:
+## Telas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- `/`: landing page explicando a ideia do produto.
+- `/app`: grafico de candles do IBOV com sinais por medias moveis.
+- `/app/prophet`: forecast Prophet interativo do fechamento do IBOV.
+
+## Como os dados entram
+
+Os scripts Python geram arquivos JSON dentro de `public/data`:
+
+```txt
+public/data/ibov-signals.json
+public/data/ibov-prophet.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O Next.js importa esses JSONs para abrir as telas. Na pagina `/app/prophet`,
+o botao `Aplicar` tambem chama uma rota local do Next.js que executa Python
+novamente e devolve um novo forecast para o grafico.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run fetch:data
+npm run fetch:prophet
+npm run fetch:all
+npm run dev
+```
 
-## Learn More
+## Configuracao Prophet usada
 
-To learn more about Next.js, take a look at the following resources:
+O forecast recomendado usa fechamento diario do IBOV em escala de log,
+horizonte de 20 pregoes, frequencia de dias uteis, tendencia linear com
+changepoints, sazonalidade multiplicativa, sazonalidade semanal/anual e sem
+sazonalidade diaria.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Essa configuracao e adequada para estudo inicial de bolsa diaria porque evita
+tratar cada oscilacao diaria como tendencia estrutural e limita o forecast a um
+horizonte curto.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Na interface, os controles mais importantes sao:
 
-## Deploy on Vercel
+- `changepoint_prior_scale`: aumenta ou reduz a sensibilidade da tendencia.
+- `changepoint_range`: define em que parte do historico o Prophet pode procurar
+  mudancas de tendencia.
+- `n_changepoints`: limita quantos pontos candidatos de mudanca serao testados.
+- `seasonality_mode`: use `multiplicative` como ponto de partida para indice de
+  bolsa.
+- `interval_width`: controla a largura da faixa de incerteza.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Aviso
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Este projeto e educacional. Os sinais e forecasts nao sao recomendacao de
+investimento.

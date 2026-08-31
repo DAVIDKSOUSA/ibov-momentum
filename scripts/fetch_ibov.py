@@ -15,7 +15,7 @@ TICKER = "^BVSP"
 def main() -> None:
     frame = yf.download(
         TICKER,
-        period="2y",
+        period="1y",
         interval="1d",
         auto_adjust=False,
         progress=False,

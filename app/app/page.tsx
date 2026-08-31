@@ -35,16 +35,20 @@ export default function TradingAppPage() {
               Painel de sinais educacionais
             </h1>
           </div>
-          <div className="grid grid-cols-2 gap-2 text-sm sm:flex">
-            <div className="rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2">
-              <span className="text-zinc-500">Ativo</span>{" "}
-              <strong>IBOV</strong>
-            </div>
-            <div className="rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2">
-              <span className="text-zinc-500">Periodo</span>{" "}
-              <strong>1D</strong>
-            </div>
-          </div>
+          <nav className="grid grid-cols-2 gap-2 text-sm font-medium sm:flex">
+            <Link
+              href="/app"
+              className="rounded-md bg-zinc-950 px-3 py-2 text-center text-white"
+            >
+              Momentos
+            </Link>
+            <Link
+              href="/app/prophet"
+              className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-center text-zinc-900 transition hover:border-zinc-500"
+            >
+              Prophet
+            </Link>
+          </nav>
         </div>
       </header>
 
