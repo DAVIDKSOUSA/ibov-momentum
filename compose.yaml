@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ibov-momentum:latest
+    container_name: ibov-momentum
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PYTHON_BIN: /opt/venv/bin/python
+      PROPHET_SCRIPT_PATH: /app/scripts/run_prophet.py
