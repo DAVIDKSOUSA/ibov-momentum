@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 
 function runProphet(config: Record<string, unknown>) {
   return new Promise<unknown>((resolve, reject) => {
-    const child = spawn(PYTHON_BIN, [PROPHET_SCRIPT_PATH], {
+    const child = spawn(/* turbopackIgnore: true */ PYTHON_BIN, [PROPHET_SCRIPT_PATH], {
       cwd: PROJECT_ROOT,
       env: {
         ...process.env,
